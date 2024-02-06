@@ -1,4 +1,4 @@
-import users from '../models/users'
+import users from '../models/users.js'
 import { StatusCodes } from 'http-status-codes'
 import jwt from 'jsonwebtoken'
 
@@ -44,12 +44,16 @@ export const login = async (req, res) => {
         account: req.user.account,
         email: req.user.email,
         role: req.user.role,
+        // reduce(現在總和, 下一個要加的值) => 統計總合
         cart: req.user.cart.reduce((total, current) => {
           return total + current.quantity
         }, 0)
       }
     })
   } catch (error) {
-
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: '未知錯誤'
+    })
   }
 }

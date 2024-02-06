@@ -1,7 +1,7 @@
 import { Schema, model, ObjectId } from 'mongoose'
 import validator from 'validator'
 import bcrypt from 'bcrypt'
-import UserRole from '../enums/UserRole'
+import UserRole from '../enums/UserRole.js'
 
 const cartSchema = new Schema({
   product: {
