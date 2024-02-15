@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer>
+  <v-navigation-drawer permanent="true" v-if="!isXs" width="224">
     <v-container>
       <v-list class="text-center">
         <v-list-item-title>會員專區</v-list-item-title>
@@ -7,11 +7,14 @@
       </v-list>
     </v-container>
   </v-navigation-drawer>
-  v-con
 </template>
 
 <script setup>
 import { computed } from 'vue'
+import { useDisplay } from 'vuetify'
+
+const { xs } = useDisplay()
+const isXs = computed(() => xs.value)
 
 const list = computed(() => {
   return [
