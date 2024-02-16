@@ -1,6 +1,6 @@
 <template>
   <!-- 手機側欄 -->
-  <v-navigation-drawer v-model="drawer" v-if="isXs" color="orange-lighten-5">
+  <v-navigation-drawer v-model="drawer" v-if="isXs || isSm" color="orange-lighten-5">
     <v-list v-model="list">
       <v-list-group v-for="item in  menu " :key="item">
         <template v-slot:activator="{ props }">
@@ -24,7 +24,7 @@
       </router-link>
       <v-spacer></v-spacer>
       <!-- 手機版 -->
-      <template v-if="isXs">
+      <template v-if="isXs || isSm">
         <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
       </template>
       <!-- 電腦版 -->
@@ -54,7 +54,8 @@ import { useDisplay } from 'vuetify'
 import { ref, computed } from 'vue'
 
 // 手機版判斷
-const { xs } = useDisplay()
+const { sm, xs } = useDisplay()
+const isSm = computed(() => sm.value)
 const isXs = computed(() => xs.value)
 
 // 手機版側欄開關
