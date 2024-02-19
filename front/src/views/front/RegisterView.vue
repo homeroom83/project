@@ -14,20 +14,15 @@
       <v-divider></v-divider>
       <v-col cols="8">
         <v-form :disabled="isSubmitting" @submit.prevent="submit">
-          <v-text-field
-            label="帳號" minlength="6" maxlength="20" counter
-            v-model="account.value.value" :error-messages="account.errorMessage.value">
+          <v-text-field label="帳號" minlength="6" maxlength="20" counter v-model="account.value.value"
+            :error-messages="account.errorMessage.value">
           </v-text-field>
-          <v-text-field
-            label="信箱" type="email"
-            v-model="email.value.value" :error-messages="email.errorMessage.value">
+          <v-text-field label="信箱" type="email" v-model="email.value.value" :error-messages="email.errorMessage.value">
           </v-text-field>
-          <v-text-field
-            label="密碼" minlength="6" maxlength="20" counter type="password"
-            v-model="password.value.value" :error-messages="password.errorMessage.value">
+          <v-text-field label="密碼" minlength="6" maxlength="20" counter type="password" v-model="password.value.value"
+            :error-messages="password.errorMessage.value">
           </v-text-field>
-          <v-text-field
-            label="確認密碼" minlength="6" maxlength="20" counter type="password"
+          <v-text-field label="確認密碼" minlength="6" maxlength="20" counter type="password"
             v-model="passwordConfirm.value.value" :error-messages="passwordConfirm.errorMessage.value">
           </v-text-field>
           <v-btn type="submit" color="green">註冊</v-btn>

@@ -4,11 +4,12 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import routeUsers from './routes/users.js'
 import { StatusCodes } from 'http-status-codes'
+import './passport/passport.js'
 
 const app = express()
 
 app.use(cors({
-  origin (origin, callback) {
+  origin(origin, callback) {
     if (origin === undefined || origin.includes('github.io') || origin.includes('localhost')) {
       callback(null, true)
     } else {
