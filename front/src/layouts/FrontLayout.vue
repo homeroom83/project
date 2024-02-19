@@ -6,9 +6,11 @@
         <template v-slot:activator="{ props }">
           <v-list-item v-bind="props" :title="item.title" class="text-center"></v-list-item>
         </template>
-        <v-list-item class="bg-white" v-for=" page in item.pages " :key="page.to" :to="page.to">
+        <template v-for=" page in item.pages " :key="page.to" >
+        <v-list-item class="bg-white" :to="page.to" v-if="page.show">
           <v-list-item>{{ page.text }}</v-list-item>
         </v-list-item>
+      </template>
       </v-list-group>
     </v-list>
   </v-navigation-drawer>
@@ -34,11 +36,14 @@
           <template v-slot:activator="{ props }">
             <v-list-item v-bind="props" :title="item.title" style="cursor: pointer;"></v-list-item>
           </template>
-          <v-list>
-            <v-list-item v-for="page in  item.pages " :key="page" :to="page.to" :active="false">
-              <v-list-item>{{ page.text }}</v-list-item>
-            </v-list-item>
+          <v-list >
+            <template v-for="page in item.pages " :key="page">
+              <v-list-item :to="page.to" :active="false" v-if="page.show">
+                <v-list-item >{{ page.text }}</v-list-item>
+              </v-list-item>
+            </template>
           </v-list>
+
         </v-menu>
       </template>
     </v-container>
@@ -52,6 +57,9 @@
 <script setup>
 import { useDisplay } from 'vuetify'
 import { ref, computed } from 'vue'
+import { useUserStore } from '@/store/user'
+
+const user = useUserStore()
 
 // 手機版判斷
 const { sm, xs } = useDisplay()
@@ -67,22 +75,24 @@ const menu = computed(() => {
     {
       title: '商品總覽',
       pages: [
-        { to: '/register', text: 'nike' },
-        { to: '/login', text: 'adidas' }
+        { to: '/register', text: 'nike', show: true },
+        { to: '/login', text: 'adidas', show: true }
       ]
     },
     {
       title: '交流專區',
       pages: [
-        { to: '/register', text: 'nike' },
-        { to: '/login', text: 'adidas' }
+        { to: '/register', text: 'nike', show: true },
+        { to: '/login', text: 'adidas', show: true }
       ]
     },
     {
       title: '會員專區',
       pages: [
-        { to: '/register', text: '註冊' },
-        { to: '/login', text: '登入' }
+        { to: '/register', text: '註冊', show: !user.isLogin },
+        { to: '/login', text: '登入', show: !user.isLogin },
+        { to: '/like', text: '我的收藏', show: user.isLogin },
+        { to: '/admin', text: '管理', show: user.isLogin && user.isAdmin }
       ]
     }
   ]
@@ -95,4 +105,5 @@ const menu = computed(() => {
   text-decoration: none;
   color: black
 }
+
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer permanent="true" v-if="!isXs && !isSm" width="224">
+  <v-navigation-drawer permanent v-if="!isXs && !isSm" width="224">
     <v-container>
       <v-list class="text-center">
         <v-list-item v-for="item in list" :key="item" :to="item.to">{{ item.text }}</v-list-item>
@@ -8,11 +8,11 @@
   </v-navigation-drawer>
   <v-container>
     <v-row>
-      <v-col cols="8">
+      <v-col cols="12" >
         <h1>登入</h1>
       </v-col>
       <v-divider></v-divider>
-      <v-col cols="8">
+      <v-col cols="6" style="min-width: 500px;">
         <v-form :disabled="isSubmitting" @submit.prevent="submit">
           <v-text-field label="帳號" minlength="6" maxlength="20" counter v-model="account.value.value"
             :error-messages="account.errorMessage.value">
@@ -32,12 +32,17 @@ import { computed } from 'vue'
 import { useDisplay } from 'vuetify'
 import { useForm, useField } from 'vee-validate'
 import * as yup from 'yup'
-import { api } from '@/plugins/axios'
 import { useRouter } from 'vue-router'
 import { useSnackbar } from 'vuetify-use-dialog'
+import { useApi } from '@/composables/axios'
+import { useUserStore } from '@/store/user'
+
+const { api } = useApi()
 
 const router = useRouter()
 const createSnackbar = useSnackbar()
+
+const user = useUserStore()
 
 const { sm, xs } = useDisplay()
 const isSm = computed(() => sm.value)
@@ -73,10 +78,11 @@ const password = useField('password')
 
 const submit = handleSubmit(async (values) => {
   try {
-    await api.post('/users/login', {
+    const { data } = await api.post('/users/login', {
       account: values.account,
       password: values.password
     })
+    user.login(data.result)
     createSnackbar({
       text: '登入成功',
       showCloseButton: false,
@@ -88,6 +94,7 @@ const submit = handleSubmit(async (values) => {
     })
     router.push('/')
   } catch (error) {
+    console.log(error)
     const text = error?.response?.data?.message || '發生錯誤，請稍後再試'
     createSnackbar({
       text,

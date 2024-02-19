@@ -45,9 +45,7 @@ export const login = async (req, res) => {
         email: req.user.email,
         role: req.user.role,
         // reduce(現在總和, 下一個要加的值) => 統計總合
-        cart: req.user.cart.reduce((total, current) => {
-          return total + current.quantity
-        }, 0)
+        cart: req.user.cartQuantity
       }
     })
   } catch (error) {
@@ -84,6 +82,26 @@ export const extend = async (req, res) => {
       success: true,
       message: '',
       result: token
+    })
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: '未知錯誤'
+    })
+  }
+}
+
+export const getProfile = (req, res) => {
+  try {
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: '',
+      result: {
+        account: req.user.account,
+        email: req.user.email,
+        role: req.user.role,
+        cart: req.user.cartQuantity
+      }
     })
   } catch (error) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

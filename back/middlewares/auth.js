@@ -34,6 +34,7 @@ export const jwt = (req, res, next) => {
   passport.authenticate('jwt', { session: false }, (error, data, info) => {
     if (error || !data) {
       if (info instanceof jsonwebtoken.JsonWebTokenError) {
+        // JWT 格式不對、SECRET 不對
         res.status(StatusCodes.UNAUTHORIZED).json({
           success: false,
           message: 'JWT 無效'

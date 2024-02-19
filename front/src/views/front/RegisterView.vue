@@ -12,7 +12,7 @@
         <h1>註冊</h1>
       </v-col>
       <v-divider></v-divider>
-      <v-col cols="8">
+      <v-col cols="6" style="min-width: 500px;">
         <v-form :disabled="isSubmitting" @submit.prevent="submit">
           <v-text-field label="帳號" minlength="6" maxlength="20" counter v-model="account.value.value"
             :error-messages="account.errorMessage.value">
@@ -38,9 +38,11 @@ import { useDisplay } from 'vuetify'
 import validator from 'validator'
 import { useForm, useField } from 'vee-validate'
 import * as yup from 'yup'
-import { api } from '@/plugins/axios'
 import { useRouter } from 'vue-router'
 import { useSnackbar } from 'vuetify-use-dialog'
+import { useApi } from '@/composables/axios'
+
+const { api } = useApi
 
 const router = useRouter()
 const createSnackbar = useSnackbar()
