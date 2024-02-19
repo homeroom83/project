@@ -6,11 +6,15 @@
         <template v-slot:activator="{ props }">
           <v-list-item v-bind="props" :title="item.title" class="text-center"></v-list-item>
         </template>
-        <template v-for=" page in item.pages " :key="page.to" >
-        <v-list-item class="bg-white" :to="page.to" v-if="page.show">
-          <v-list-item>{{ page.text }}</v-list-item>
-        </v-list-item>
-      </template>
+        <template v-for=" page in item.pages " :key="page.to">
+          <v-list-item class="bg-white" :to="page.to" v-if="page.show">
+            <v-list-item>{{ page.text }}</v-list-item>
+          </v-list-item>
+          <template>
+            <v-btn v-if="user.isLogin">登出</v-btn>
+          </template>
+
+        </template>
       </v-list-group>
     </v-list>
   </v-navigation-drawer>
@@ -36,14 +40,16 @@
           <template v-slot:activator="{ props }">
             <v-list-item v-bind="props" :title="item.title" style="cursor: pointer;"></v-list-item>
           </template>
-          <v-list >
+          <v-list>
             <template v-for="page in item.pages " :key="page">
               <v-list-item :to="page.to" :active="false" v-if="page.show">
-                <v-list-item >{{ page.text }}</v-list-item>
+                <v-list-item>{{ page.text }}</v-list-item>
               </v-list-item>
             </template>
+            <template>
+              <v-btn v-if="user.isLogin">登出</v-btn>
+            </template>
           </v-list>
-
         </v-menu>
       </template>
     </v-container>
@@ -105,5 +111,4 @@ const menu = computed(() => {
   text-decoration: none;
   color: black
 }
-
 </style>

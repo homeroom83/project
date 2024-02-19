@@ -59,6 +59,8 @@ passport.use('jwt', new passportJWT.Strategy({
     return done(null, { user, token }, null)
   } catch (error) {
     if (error.message === 'EXPIRED' || error.message === 'JWT') {
+      return done(null, null, { message: 'JWT 過期' })
+    } else if (error.message === 'JWT') {
       return done(null, null, { message: 'JWT 無效' })
     } else {
       return done(null, null, { message: '未知錯誤' })

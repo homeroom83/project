@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer permanent v-if="!isXs && !isSm" width="224">
+  <v-navigation-drawer permanent="true" v-if="!isXs && !isSm" width="224">
     <v-container>
       <v-list class="text-center">
         <v-list-item v-for="item in list" :key="item" :to="item.to">{{ item.text }}</v-list-item>
@@ -8,7 +8,7 @@
   </v-navigation-drawer>
   <v-container>
     <v-row>
-      <v-col cols="12" >
+      <v-col cols="12">
         <h1>登入</h1>
       </v-col>
       <v-divider></v-divider>

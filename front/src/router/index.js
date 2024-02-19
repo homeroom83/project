@@ -1,5 +1,5 @@
 // Composables
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, START_LOCATION } from 'vue-router'
 import { useUserStore } from '@/store/user'
 
 const routes = [
@@ -50,8 +50,12 @@ router.afterEach((to, from) => {
   document.title = to.meta.title
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const user = useUserStore()
+
+  if (from === START_LOCATION) {
+    await user.getProfile()
+  }
 
   if (user.isLogin && ['/register', '/login'].includes(to.path)) {
     // 如果有登入，要去註冊或登入頁，重新導向回首頁
