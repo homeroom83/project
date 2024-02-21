@@ -10,14 +10,13 @@ export const useUserStore = defineStore('user', () => {
   const token = ref('')
   const account = ref('')
   const email = ref('')
-  const cart = ref('')
+  const cart = ref(0)
   const role = ref(UserRole.USER)
 
   const login = (data) => {
     if (data.token) {
       token.value = data.token
     }
-    token.value = data.token
     account.value = data.account
     email.value = data.email
     cart.value = data.cart

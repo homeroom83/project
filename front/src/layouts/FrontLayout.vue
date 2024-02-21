@@ -1,22 +1,19 @@
 <template>
   <!-- 手機側欄 -->
   <v-navigation-drawer v-model="drawer" v-if="isXs || isSm" color="orange-lighten-5">
-    <v-list v-model="list">
+    <v-list v-model="list" >
       <v-list-group v-for="item in  menu " :key="item">
-        <template v-slot:activator="{ props }">
+        <template v-slot:activator="{ props }" >
           <v-list-item v-bind="props" :title="item.title" class="text-center"></v-list-item>
         </template>
         <template v-for=" page in item.pages " :key="page.to">
-          <v-list-item class="bg-white" :to="page.to" v-if="page.show">
+          <v-list-item class="bg-white" :to="page.to" v-if="page.show" >
             <v-list-item>{{ page.text }}</v-list-item>
           </v-list-item>
-          <template>
-            <v-btn v-if="user.isLogin">登出</v-btn>
-          </template>
-
         </template>
       </v-list-group>
     </v-list>
+    <v-list-item v-if="user.isLogin" @click="logout" class="text-center">登出</v-list-item>
   </v-navigation-drawer>
 
   <!-- 導覽列 -->
@@ -46,11 +43,10 @@
                 <v-list-item>{{ page.text }}</v-list-item>
               </v-list-item>
             </template>
-            <template>
-              <v-btn v-if="user.isLogin">登出</v-btn>
-            </template>
           </v-list>
         </v-menu>
+        <v-list-item v-if="user.isLogin && user.isAdmin" to="/admin">管理員</v-list-item>
+        <v-list-item v-if="user.isLogin" @click="logout">登出</v-list-item>
       </template>
     </v-container>
   </v-app-bar>
@@ -64,6 +60,13 @@
 import { useDisplay } from 'vuetify'
 import { ref, computed } from 'vue'
 import { useUserStore } from '@/store/user'
+import { useApi } from '@/composables/axios'
+import { useSnackbar } from 'vuetify-use-dialog'
+import { useRouter } from 'vue-router'
+
+const { apiAuth } = useApi()
+const router = useRouter()
+const createSnackbar = useSnackbar()
 
 const user = useUserStore()
 
@@ -81,15 +84,15 @@ const menu = computed(() => {
     {
       title: '商品總覽',
       pages: [
-        { to: '/register', text: 'nike', show: true },
-        { to: '/login', text: 'adidas', show: true }
+        { to: '/register', text: 'Nike', show: true },
+        { to: '/login', text: 'New Balance', show: true }
       ]
     },
     {
       title: '交流專區',
       pages: [
-        { to: '/register', text: 'nike', show: true },
-        { to: '/login', text: 'adidas', show: true }
+        { to: '/register', text: 'Nike', show: true },
+        { to: '/login', text: 'New Balance', show: true }
       ]
     },
     {
@@ -97,12 +100,39 @@ const menu = computed(() => {
       pages: [
         { to: '/register', text: '註冊', show: !user.isLogin },
         { to: '/login', text: '登入', show: !user.isLogin },
-        { to: '/like', text: '我的收藏', show: user.isLogin },
-        { to: '/admin', text: '管理', show: user.isLogin && user.isAdmin }
+        { to: '/like', text: '我的收藏', show: user.isLogin }
       ]
     }
   ]
 })
+
+const logout = async () => {
+  try {
+    await apiAuth.delete('/users/logout')
+    user.logout()
+    createSnackbar({
+      text: '登出成功',
+      showCloseButton: false,
+      snackbarProps: {
+        timeout: 2000,
+        color: 'green',
+        location: 'bottom'
+      }
+    })
+    router.push('/')
+  } catch (error) {
+    const text = error?.response?.data?.message || '發生錯誤，請稍後再試'
+    createSnackbar({
+      text,
+      showCloseButton: false,
+      snackbarProps: {
+        timeout: 2000,
+        color: 'red',
+        location: 'bottom'
+      }
+    })
+  }
+}
 
 </script>
 

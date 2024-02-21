@@ -42,7 +42,7 @@ import { useRouter } from 'vue-router'
 import { useSnackbar } from 'vuetify-use-dialog'
 import { useApi } from '@/composables/axios'
 
-const { api } = useApi
+const { api } = useApi()
 
 const router = useRouter()
 const createSnackbar = useSnackbar()

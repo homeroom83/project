@@ -1,9 +1,11 @@
 <template>
   <v-app-bar color="orange-lighten-4">
     <v-container class="d-flex align-center">
+      <router-link to="/admin" class="sneaker">
         <v-app-bar-title>
-          管理員介面
+          管理者介面
         </v-app-bar-title>
+      </router-link>
       <v-spacer></v-spacer>
         <!-- 選項列表 -->
         <v-menu v-for="item in menu" :key="item">
@@ -35,7 +37,7 @@ const user = useUserStore()
 const menu = computed(() => {
   return [
     { to: '/admin/products', text: '商品管理' },
-    { to: '/admin/member', text: '會員管理' },
+    { to: '/admin/members', text: '會員管理' },
     { to: '/', text: '回首頁' }
   ]
 })

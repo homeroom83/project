@@ -12,7 +12,7 @@ const routes = [
         name: 'Home',
         component: () => import('@/views/front/HomeView.vue'),
         meta: {
-          title: 'sneaker',
+          title: 'Sneaker',
           login: false,
           admin: false
         }
@@ -22,7 +22,7 @@ const routes = [
         name: 'Register',
         component: () => import('@/views/front/RegisterView.vue'),
         meta: {
-          title: 'sneaker | 註冊',
+          title: 'Sneaker | 註冊',
           login: false,
           admin: false
         }
@@ -32,9 +32,45 @@ const routes = [
         name: 'Login',
         component: () => import('@/views/front/LoginView.vue'),
         meta: {
-          title: 'sneaker | 登入',
+          title: 'Sneaker | 登入',
           login: false,
           admin: false
+        }
+      }
+    ]
+  },
+  {
+    path: '/admin',
+    component: () => import('@/layouts/AdminLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'AdminHome',
+        component: () => import('@/views/admin/HomeView.vue'),
+        meta: {
+          title: 'Sneaker | 管理員介面',
+          login: true,
+          adime: true
+        }
+      },
+      {
+        path: 'products',
+        name: 'AdminProducts',
+        component: () => import('@/views/admin/ProductsView.vue'),
+        meta: {
+          title: 'Sneaker | 商品管理',
+          login: true,
+          adime: true
+        }
+      },
+      {
+        path: 'members',
+        name: 'AdminMembers',
+        component: () => import('@/views/admin/MembersView.vue'),
+        meta: {
+          title: 'Sneaker | 會員管理',
+          login: true,
+          adime: true
         }
       }
     ]
