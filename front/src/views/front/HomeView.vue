@@ -1,3 +1,3 @@
-<template lang="pug">
-h1 123
+<template>
+  <h1>home</h1>
 </template>
