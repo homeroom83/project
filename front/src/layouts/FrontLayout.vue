@@ -45,7 +45,7 @@
             </template>
           </v-list>
         </v-menu>
-        <v-list-item v-if="user.isLogin && user.isAdmin" to="/admin">管理員</v-list-item>
+        <v-list-item v-if="user.isLogin && user.isAdmin" to="/admin/products">管理員</v-list-item>
         <v-list-item v-if="user.isLogin" @click="logout">登出</v-list-item>
       </template>
     </v-container>

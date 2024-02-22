@@ -1,7 +1,7 @@
 <template>
   <v-app-bar color="orange-lighten-4">
     <v-container class="d-flex align-center">
-      <router-link to="/admin" class="sneaker">
+      <router-link to="/admin/products" class="sneaker">
         <v-app-bar-title>
           管理者介面
         </v-app-bar-title>

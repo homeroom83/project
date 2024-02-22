@@ -44,16 +44,6 @@ const routes = [
     component: () => import('@/layouts/AdminLayout.vue'),
     children: [
       {
-        path: '',
-        name: 'AdminHome',
-        component: () => import('@/views/admin/HomeView.vue'),
-        meta: {
-          title: 'Sneaker | 管理員介面',
-          login: true,
-          adime: true
-        }
-      },
-      {
         path: 'products',
         name: 'AdminProducts',
         component: () => import('@/views/admin/ProductsView.vue'),
